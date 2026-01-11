@@ -79,6 +79,17 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  // Verify company ownership
+  const { data: companyData, error: companyError } = await supabase
+    .from('companies')
+    .select('id')
+    .eq('user_id', user.id)
+    .single()
+
+  if (companyError || !companyData) {
+    return NextResponse.json({ error: 'Company not found' }, { status: 404 })
+  }
+
   const body = await request.json()
   const { id, ...updateData } = body
 
@@ -86,10 +97,12 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: 'Site ID required' }, { status: 400 })
   }
 
+  // Only update if site belongs to user's company
   const { data, error } = await supabase
     .from('sites')
     .update(updateData)
     .eq('id', id)
+    .eq('company_id', companyData.id)
     .select()
     .single()
 
@@ -108,6 +121,17 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  // Verify company ownership
+  const { data: companyData, error: companyError } = await supabase
+    .from('companies')
+    .select('id')
+    .eq('user_id', user.id)
+    .single()
+
+  if (companyError || !companyData) {
+    return NextResponse.json({ error: 'Company not found' }, { status: 404 })
+  }
+
   const searchParams = request.nextUrl.searchParams
   const id = searchParams.get('id')
 
@@ -115,11 +139,12 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: 'Site ID required' }, { status: 400 })
   }
 
-  // Soft delete by setting is_active to false
+  // Soft delete only if site belongs to user's company
   const { error } = await supabase
     .from('sites')
     .update({ is_active: false })
     .eq('id', id)
+    .eq('company_id', companyData.id)
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

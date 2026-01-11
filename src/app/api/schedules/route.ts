@@ -139,11 +139,41 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  // Verify company ownership
+  const { data: companyData, error: companyError } = await supabase
+    .from('companies')
+    .select('id')
+    .eq('user_id', user.id)
+    .single()
+
+  if (companyError || !companyData) {
+    return NextResponse.json({ error: 'Company not found' }, { status: 404 })
+  }
+
   const body = await request.json()
   const { id, ...updateData } = body
 
   if (!id) {
     return NextResponse.json({ error: 'Schedule ID required' }, { status: 400 })
+  }
+
+  // Verify schedule belongs to user's company via site
+  const { data: schedule } = await supabase
+    .from('schedules')
+    .select('site_id')
+    .eq('id', id)
+    .single()
+
+  if (schedule) {
+    const { data: site } = await supabase
+      .from('sites')
+      .select('company_id')
+      .eq('id', schedule.site_id)
+      .single()
+
+    if (!site || site.company_id !== companyData.id) {
+      return NextResponse.json({ error: 'Not authorized' }, { status: 403 })
+    }
   }
 
   const { data, error } = await supabase
@@ -168,11 +198,41 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  // Verify company ownership
+  const { data: companyData, error: companyError } = await supabase
+    .from('companies')
+    .select('id')
+    .eq('user_id', user.id)
+    .single()
+
+  if (companyError || !companyData) {
+    return NextResponse.json({ error: 'Company not found' }, { status: 404 })
+  }
+
   const searchParams = request.nextUrl.searchParams
   const id = searchParams.get('id')
 
   if (!id) {
     return NextResponse.json({ error: 'Schedule ID required' }, { status: 400 })
+  }
+
+  // Verify schedule belongs to user's company via site
+  const { data: schedule } = await supabase
+    .from('schedules')
+    .select('site_id')
+    .eq('id', id)
+    .single()
+
+  if (schedule) {
+    const { data: site } = await supabase
+      .from('sites')
+      .select('company_id')
+      .eq('id', schedule.site_id)
+      .single()
+
+    if (!site || site.company_id !== companyData.id) {
+      return NextResponse.json({ error: 'Not authorized' }, { status: 403 })
+    }
   }
 
   const { error } = await supabase
