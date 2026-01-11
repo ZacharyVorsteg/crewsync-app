@@ -11,7 +11,6 @@ const footerLinks = {
   ],
   Support: [
     { name: 'Contact', href: 'mailto:support@crewsync.app' },
-    { name: 'Help', href: 'mailto:help@crewsync.app' },
   ],
   Legal: [
     { name: 'Privacy Policy', href: '/privacy' },
@@ -22,27 +21,8 @@ const footerLinks = {
 export function Footer() {
   return (
     <footer className="bg-gray-900 text-white pb-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* CTA Section */}
-        <div className="py-16 border-b border-gray-800">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">
-              Ready to take control of your cleaning operation?
-            </h2>
-            <p className="text-gray-400 mb-8">
-              Start your free 14-day trial today. No credit card required.
-            </p>
-            <Link
-              href="/signup"
-              className="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors"
-            >
-              Start Free Trial
-            </Link>
-          </div>
-        </div>
-
-        {/* Links Section */}
-        <div className="py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="h-10 w-10 rounded-xl bg-blue-600 flex items-center justify-center">
@@ -57,7 +37,7 @@ export function Footer() {
 
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h3 className="font-semibold mb-4">{category}</h3>
+              <h3 className="font-semibold mb-4 text-sm">{category}</h3>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
@@ -83,9 +63,9 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Bottom Section */}
-        <div className="py-8 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-gray-400 text-sm">
+        {/* Bottom */}
+        <div className="mt-12 pt-8 border-t border-gray-800 text-center">
+          <p className="text-gray-500 text-sm">
             &copy; {new Date().getFullYear()} CrewSync. All rights reserved.
           </p>
         </div>

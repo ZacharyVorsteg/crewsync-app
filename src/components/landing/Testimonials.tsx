@@ -60,10 +60,10 @@ export function Testimonials() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Trusted by Cleaning Companies Everywhere
+            What Our Customers Say
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            See what other cleaning company owners are saying about CrewSync.
+            Real results from cleaning company owners using CrewSync.
           </p>
         </div>
 

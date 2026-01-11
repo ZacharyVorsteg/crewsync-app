@@ -21,56 +21,48 @@ const features = [
     name: 'GPS-Verified Clock-In',
     description:
       'Crew members can only clock in when physically at the job site. Know exactly when your team arrives and leaves.',
-    color: 'bg-blue-500',
   },
   {
     icon: Bell,
     name: 'No-Show Alerts',
     description:
       'Get instant notifications when crew members haven\'t clocked in. Catch problems before your clients do.',
-    color: 'bg-red-500',
   },
   {
     icon: DollarSign,
     name: 'Job Profitability',
     description:
       'Track labor costs against budget for every site. Know which accounts are making money and which are bleeding it.',
-    color: 'bg-green-500',
   },
   {
     icon: Calendar,
     name: 'Smart Scheduling',
     description:
       'Drag-and-drop schedule builder with recurring shifts. Assign the right crew to the right sites.',
-    color: 'bg-purple-500',
   },
   {
     icon: Users,
     name: 'Crew Management',
     description:
       'Track certifications, performance metrics, and availability. Build your A-team.',
-    color: 'bg-indigo-500',
   },
   {
     icon: Smartphone,
     name: 'Mobile-First App',
     description:
       'Simple, multi-language app for field workers. One-tap clock in/out with site checklists.',
-    color: 'bg-pink-500',
   },
   {
     icon: Globe,
     name: 'Client Portal',
     description:
       'Give clients visibility into their cleaning schedule. Build trust with service transparency.',
-    color: 'bg-cyan-500',
   },
   {
     icon: BarChart3,
     name: 'Detailed Reports',
     description:
       'On-time rates, labor hours, profitability by site. Export for payroll in one click.',
-    color: 'bg-orange-500',
   },
 ]
 
@@ -133,10 +125,10 @@ export function Features() {
 
         {/* Features grid */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
             Everything You Need to Run Your Crew
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          </h3>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Built specifically for commercial cleaning companies. No bloat, no complexity.
           </p>
         </div>
@@ -147,9 +139,7 @@ export function Features() {
               key={feature.name}
               className="relative group p-6 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-200"
             >
-              <div
-                className={`inline-flex items-center justify-center h-12 w-12 rounded-xl ${feature.color} text-white mb-4`}
-              >
+              <div className="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-blue-600 text-white mb-4">
                 <feature.icon className="h-6 w-6" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -160,21 +150,6 @@ export function Features() {
           ))}
         </div>
 
-        {/* Trust badges */}
-        <div className="mt-20 text-center">
-          <p className="text-sm text-gray-500 uppercase tracking-wider mb-8">
-            Trusted by cleaning companies across the country
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
-            {['CleanPro Services', 'SparkleTeam', 'Elite Janitorial', 'Premier Clean', 'ProShine'].map(
-              (company) => (
-                <div key={company} className="text-xl font-bold text-gray-400">
-                  {company}
-                </div>
-              )
-            )}
-          </div>
-        </div>
       </div>
     </section>
   )
