@@ -92,8 +92,8 @@ export function Hero() {
               </div>
             </div>
             <div className="p-4 sm:p-8">
-              <div className="grid grid-cols-3 gap-4">
-                <div className="col-span-1 bg-gray-50 rounded-lg p-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="hidden md:block col-span-1 bg-gray-50 rounded-lg p-4">
                   <div className="h-4 w-20 bg-gray-200 rounded mb-3"></div>
                   <div className="space-y-2">
                     {[1, 2, 3, 4].map((i) => (
@@ -101,30 +101,30 @@ export function Hero() {
                     ))}
                   </div>
                 </div>
-                <div className="col-span-2 space-y-4">
-                  <div className="grid grid-cols-3 gap-4">
+                <div className="md:col-span-2 space-y-4">
+                  <div className="grid grid-cols-3 gap-2 sm:gap-4">
                     {[
                       { label: 'On-Time Rate', value: '94%', color: 'text-green-600' },
                       { label: 'Active Crew', value: '12', color: 'text-blue-600' },
                       { label: 'Alerts', value: '2', color: 'text-red-600' },
                     ].map((stat) => (
-                      <div key={stat.label} className="bg-white border border-gray-200 rounded-lg p-4">
-                        <div className="text-xs text-gray-500">{stat.label}</div>
-                        <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
+                      <div key={stat.label} className="bg-white border border-gray-200 rounded-lg p-2 sm:p-4">
+                        <div className="text-[10px] sm:text-xs text-gray-500">{stat.label}</div>
+                        <div className={`text-lg sm:text-2xl font-bold ${stat.color}`}>{stat.value}</div>
                       </div>
                     ))}
                   </div>
-                  <div className="bg-white border border-gray-200 rounded-lg p-4 h-48">
+                  <div className="bg-white border border-gray-200 rounded-lg p-4 h-32 sm:h-48">
                     <div className="h-4 w-32 bg-gray-200 rounded mb-4"></div>
                     <div className="space-y-2">
-                      {[1, 2, 3].map((i) => (
+                      {[1, 2].map((i) => (
                         <div key={i} className="flex items-center gap-3">
-                          <div className="h-10 w-10 bg-gray-200 rounded-full"></div>
-                          <div className="flex-1">
+                          <div className="h-8 w-8 sm:h-10 sm:w-10 bg-gray-200 rounded-full flex-shrink-0"></div>
+                          <div className="flex-1 min-w-0">
                             <div className="h-3 w-24 bg-gray-200 rounded mb-1"></div>
                             <div className="h-2 w-16 bg-gray-100 rounded"></div>
                           </div>
-                          <div className="h-6 w-16 bg-green-100 rounded-full"></div>
+                          <div className="h-6 w-12 sm:w-16 bg-green-100 rounded-full flex-shrink-0"></div>
                         </div>
                       ))}
                     </div>
