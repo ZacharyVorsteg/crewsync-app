@@ -1,7 +1,15 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
+import { checkRateLimit, getClientIdentifier, rateLimitResponse, RATE_LIMITS } from '@/lib/rate-limit'
 
 export async function POST(request: NextRequest) {
+  // Rate limiting - use sensitive limit for clock-in operations
+  const clientId = getClientIdentifier(request)
+  const rateLimit = checkRateLimit(clientId, 'clock-in', RATE_LIMITS.sensitive)
+  if (!rateLimit.success) {
+    return rateLimitResponse(rateLimit)
+  }
+
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -11,6 +19,11 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json()
   const { schedule_id, latitude, longitude } = body
+
+  // Validate input
+  if (!schedule_id || typeof schedule_id !== 'string') {
+    return NextResponse.json({ error: 'Valid schedule_id is required' }, { status: 400 })
+  }
 
   // Get the crew member
   const { data: crewMember } = await supabase
@@ -23,29 +36,39 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Crew member not found' }, { status: 404 })
   }
 
-  // Get the schedule
+  // Get the schedule - verify it belongs to the crew member
   const { data: schedule } = await supabase
     .from('schedules')
     .select('*, site:sites(*)')
     .eq('id', schedule_id)
+    .eq('crew_member_id', crewMember.id)
     .single()
 
   if (!schedule) {
-    return NextResponse.json({ error: 'Schedule not found' }, { status: 404 })
+    return NextResponse.json({ error: 'Schedule not found or not assigned to you' }, { status: 404 })
   }
 
   // Calculate if within geofence
-  let isVerified = true
-  const geofenceRadius = (crewMember.companies as any)?.geofence_radius || 100
+  // SECURITY: If site has geofence coordinates but user doesn't provide location, mark as unverified
+  let isVerified = false
+  const geofenceRadius = (crewMember.companies as { geofence_radius?: number })?.geofence_radius || 100
 
-  if (schedule.site?.latitude && schedule.site?.longitude && latitude && longitude) {
-    const distance = calculateDistance(
-      latitude,
-      longitude,
-      schedule.site.latitude,
-      schedule.site.longitude
-    )
-    isVerified = distance <= geofenceRadius
+  // Only mark as verified if location check passes
+  if (schedule.site?.latitude && schedule.site?.longitude) {
+    // Site has geofence - location is required for verification
+    if (typeof latitude === 'number' && typeof longitude === 'number') {
+      const distance = calculateDistance(
+        latitude,
+        longitude,
+        schedule.site.latitude,
+        schedule.site.longitude
+      )
+      isVerified = distance <= geofenceRadius
+    }
+    // If no coordinates provided, isVerified stays false
+  } else {
+    // Site has no geofence configured - allow verification
+    isVerified = true
   }
 
   // Create time entry
@@ -65,7 +88,7 @@ export async function POST(request: NextRequest) {
     .single()
 
   if (entryError) {
-    return NextResponse.json({ error: entryError.message }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to create time entry' }, { status: 500 })
   }
 
   // Update schedule status
