@@ -8,25 +8,14 @@ const footerLinks = {
     { name: 'Features', href: '#features' },
     { name: 'Pricing', href: '#pricing' },
     { name: 'ROI Calculator', href: '#roi' },
-    { name: 'Mobile App', href: '/mobile' },
-    { name: 'Client Portal', href: '/portal' },
   ],
-  Company: [
-    { name: 'About', href: '/about' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Contact', href: '/contact' },
-  ],
-  Resources: [
-    { name: 'Help Center', href: '/help' },
-    { name: 'API Docs', href: '/docs' },
-    { name: 'System Status', href: '/status' },
-    { name: 'Webinars', href: '/webinars' },
+  Support: [
+    { name: 'Contact', href: 'mailto:support@crewsync.app' },
+    { name: 'Help', href: 'mailto:help@crewsync.app' },
   ],
   Legal: [
     { name: 'Privacy Policy', href: '/privacy' },
     { name: 'Terms of Service', href: '/terms' },
-    { name: 'Cookie Policy', href: '/cookies' },
   ],
 }
 
@@ -53,8 +42,8 @@ export function Footer() {
         </div>
 
         {/* Links Section */}
-        <div className="py-12 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
-          <div className="col-span-2 md:col-span-4 lg:col-span-1">
+        <div className="py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="h-10 w-10 rounded-xl bg-blue-600 flex items-center justify-center">
                 <Building2 className="h-6 w-6 text-white" />
@@ -72,12 +61,21 @@ export function Footer() {
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-gray-400 hover:text-white text-sm transition-colors"
-                    >
-                      {link.name}
-                    </Link>
+                    {link.href.startsWith('mailto:') ? (
+                      <a
+                        href={link.href}
+                        className="text-gray-400 hover:text-white text-sm transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="text-gray-400 hover:text-white text-sm transition-colors"
+                      >
+                        {link.name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -90,32 +88,6 @@ export function Footer() {
           <p className="text-gray-400 text-sm">
             &copy; {new Date().getFullYear()} CrewSync. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
-            <a
-              href="https://twitter.com/crewsync"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              Twitter
-            </a>
-            <a
-              href="https://linkedin.com/company/crewsync"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              LinkedIn
-            </a>
-            <a
-              href="https://facebook.com/crewsync"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              Facebook
-            </a>
-          </div>
         </div>
       </div>
     </footer>
