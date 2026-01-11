@@ -112,8 +112,8 @@ export function SiteForm({ isOpen, onClose, onSave, site }: SiteFormProps) {
           longitude: data[0].lon,
         })
       }
-    } catch (error) {
-      console.error('Geocoding failed:', error)
+    } catch {
+      // Geocoding failed - user can enter coordinates manually
     }
   }
 

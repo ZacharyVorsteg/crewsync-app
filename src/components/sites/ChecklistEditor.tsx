@@ -45,8 +45,8 @@ export function ChecklistEditor({ siteId, items, onSave }: ChecklistEditorProps)
       const validItems = checklist.filter((item) => item.task?.trim())
       await onSave(validItems)
       setHasChanges(false)
-    } catch (error) {
-      console.error('Failed to save checklist:', error)
+    } catch {
+      // Save failed - parent handles the error
     } finally {
       setIsLoading(false)
     }
