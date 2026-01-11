@@ -33,7 +33,7 @@ export function ROICalculator() {
     <section className="py-20 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-100 text-green-700 text-sm font-medium mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-medium mb-4">
             <Calculator className="h-4 w-4" />
             ROI Calculator
           </div>
@@ -135,9 +135,9 @@ export function ROICalculator() {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-green-50 rounded-xl">
+                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl">
                   <div className="flex items-center gap-3">
-                    <TrendingUp className="h-5 w-5 text-green-600" />
+                    <TrendingUp className="h-5 w-5 text-blue-600" />
                     <div>
                       <p className="font-medium text-gray-900">No-shows prevented</p>
                       <p className="text-sm text-gray-500">
@@ -145,14 +145,14 @@ export function ROICalculator() {
                       </p>
                     </div>
                   </div>
-                  <span className="text-lg font-bold text-green-600">
+                  <span className="text-lg font-bold text-blue-600">
                     {formatCurrency(monthlySavingsNoShows)}/mo
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-purple-50 rounded-xl">
+                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl">
                   <div className="flex items-center gap-3">
-                    <DollarSign className="h-5 w-5 text-purple-600" />
+                    <DollarSign className="h-5 w-5 text-blue-600" />
                     <div>
                       <p className="font-medium text-gray-900">Scheduling automation</p>
                       <p className="text-sm text-gray-500">
@@ -160,7 +160,7 @@ export function ROICalculator() {
                       </p>
                     </div>
                   </div>
-                  <span className="text-lg font-bold text-purple-600">
+                  <span className="text-lg font-bold text-blue-600">
                     {formatCurrency(schedulingAutomationSavings * 4)}/mo
                   </span>
                 </div>
