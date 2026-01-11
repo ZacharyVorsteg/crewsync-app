@@ -23,7 +23,6 @@ export async function POST(request: NextRequest) {
       process.env.STRIPE_WEBHOOK_SECRET!
     );
   } catch (err) {
-    console.error('Webhook signature verification failed:', err);
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
@@ -80,9 +79,7 @@ export async function POST(request: NextRequest) {
       }
 
       case 'invoice.payment_succeeded': {
-        const invoice = event.data.object as Stripe.Invoice;
-        // Log successful payment for records
-        console.log('Payment succeeded for invoice:', invoice.id);
+        // Payment succeeded - no action needed
         break;
       }
 
@@ -101,7 +98,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error('Webhook handler error:', error);
     return NextResponse.json(
       { error: 'Webhook handler failed' },
       { status: 500 }
