@@ -54,17 +54,15 @@ export function Hero() {
             Finally, software built specifically for commercial cleaning operations.
           </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link href="/signup">
               <Button size="lg" rightIcon={<ArrowRight className="h-5 w-5" />}>
                 Start 14-Day Free Trial
               </Button>
             </Link>
-            <Link href="#demo">
-              <Button size="lg" variant="outline">
-                Watch Demo
-              </Button>
-            </Link>
+            <a href="#demo" className="text-gray-600 hover:text-blue-600 font-medium transition-colors">
+              Watch Demo →
+            </a>
           </div>
 
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-gray-600">
