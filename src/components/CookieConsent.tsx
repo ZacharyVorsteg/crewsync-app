@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { X } from 'lucide-react';
 
 export function CookieConsent() {
   const [showBanner, setShowBanner] = useState(false);
@@ -9,7 +10,7 @@ export function CookieConsent() {
   useEffect(() => {
     const consent = localStorage.getItem('cookie-consent');
     if (!consent) {
-      const timer = setTimeout(() => setShowBanner(true), 500);
+      const timer = setTimeout(() => setShowBanner(true), 1000);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -27,29 +28,36 @@ export function CookieConsent() {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-50 p-4 sm:p-6 pointer-events-none">
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl border border-gray-200 p-4 sm:p-6 pointer-events-auto">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-sm text-gray-600 flex-1">
-            We use cookies to enhance your experience.{' '}
-            <Link href="/privacy" className="text-blue-600 hover:underline">
-              Privacy Policy
+    <div className="fixed bottom-4 right-4 z-50 max-w-sm animate-in slide-in-from-bottom-4 duration-300">
+      <div className="bg-gray-900 text-white rounded-lg shadow-lg p-4">
+        <div className="flex items-start gap-3">
+          <p className="text-sm text-gray-300 flex-1">
+            We use cookies.{' '}
+            <Link href="/privacy" className="text-blue-400 hover:underline">
+              Learn more
             </Link>
           </p>
-          <div className="flex gap-3 w-full sm:w-auto">
-            <button
-              onClick={handleDecline}
-              className="flex-1 sm:flex-none px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Decline
-            </button>
-            <button
-              onClick={handleAccept}
-              className="flex-1 sm:flex-none px-4 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Accept
-            </button>
-          </div>
+          <button
+            onClick={handleDecline}
+            className="text-gray-400 hover:text-white transition-colors"
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="flex gap-2 mt-3">
+          <button
+            onClick={handleDecline}
+            className="flex-1 px-3 py-1.5 text-xs text-gray-300 hover:text-white border border-gray-600 rounded hover:bg-gray-800 transition-colors"
+          >
+            Decline
+          </button>
+          <button
+            onClick={handleAccept}
+            className="flex-1 px-3 py-1.5 text-xs text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors"
+          >
+            Accept
+          </button>
         </div>
       </div>
     </div>
